@@ -20,7 +20,7 @@ public class CartPage extends BasePage {
         driver.get(URL);
     }
     public void validateNumberOfProducts(int number){
-        Assert.assertEquals(driver.findElements(CART_ITEM).size(),number,"Колл элеиентов");
+        Assert.assertEquals(driver.findElements(CART_ITEM).size(),number,"Колл элементов");
     }
     public void validateProductDetails(String productName, int quantity, double price) {
         String actualQuantity = driver.findElement(
