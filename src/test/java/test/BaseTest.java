@@ -1,5 +1,6 @@
 package test;
 
+import org.testng.annotations.AfterMethod;
 import pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,14 +29,12 @@ public class BaseTest {
         checkoutPage = new CheckoutPage(driver);
         checkoutPageStepTwo = new CheckoutPageStepTwo(driver);
         loginPageFactory = new LoginPageFactory(driver);
-
-
     }
 
-//    @AfterMethod(alwaysRun=true)
-//    public void closeBrowser() {
-//        driver.quit();
-//    }
+   @AfterMethod(alwaysRun=true)
+   public void closeBrowser() {
+       driver.quit();
+    }
 }
 
 
