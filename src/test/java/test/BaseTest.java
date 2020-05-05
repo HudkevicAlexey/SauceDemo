@@ -1,20 +1,22 @@
 package test;
 
-import Pages.*;
+import pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
+
     private WebDriver driver;
     LoginPage loginPage;
     ProductsPage productsPage;
     CartPage cartPage;
     CheckoutPage checkoutPage;
     CheckoutPageStepTwo checkoutPageStepTwo;
+    LoginPageFactory loginPageFactory;
+
     @BeforeMethod
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
@@ -25,6 +27,7 @@ public class BaseTest {
         cartPage = new CartPage(driver);
         checkoutPage = new CheckoutPage(driver);
         checkoutPageStepTwo = new CheckoutPageStepTwo(driver);
+        loginPageFactory = new LoginPageFactory(driver);
 
 
     }

@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-public class BasePage {
+public abstract class BasePage {
     WebDriver driver;
     WebDriverWait wait;
 
@@ -16,6 +16,10 @@ public class BasePage {
         this.driver = driver;
         wait = new WebDriverWait(this.driver, 10);
     }
+
+    protected abstract BasePage openPage();
+
+    protected abstract BasePage isPageOpened();
 
     public void waitForNumberOfElements(By locator, int numberOfElements) {
         wait.until(ExpectedConditions.numberOfElementsToBe(locator, numberOfElements));
@@ -25,12 +29,13 @@ public class BasePage {
             Assert.fail("Колличество элементов на стртанице не соответсвует твоим ожидания");
         }
     }
+
     public boolean isElementPresent(By by) {
         try {
             driver.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
             return false;
+        } catch (NoSuchElementException e) {
+            return true;
         }
     }
 }

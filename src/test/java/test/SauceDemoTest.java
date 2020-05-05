@@ -2,43 +2,53 @@ package test;
 
 import org.testng.annotations.Test;
 
-public class SauceDemoTest extends BaseTest {
+import static testdata.TestData.*;
 
+public class SauceDemoTest extends BaseTest {
 
     @Test
     public void flowTest() {
-        loginPage.openPage();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        cartPage.openPage();
-        cartPage.validateNumberOfProducts(1);
-        cartPage.validateProductDetails("Sauce Labs Backpack", 1, 29.99);
-        checkoutPage.openPage();
-        //Всё что выше классная работа 
-        //Проверка прохождения пустой формы
-        checkoutPage.emptyFormPassCheck();
-        //Прохожение формы только по имени
-        checkoutPage.passCheckoutFormOnlyWithFirstNameCheck();
-        checkoutPage.openPage();
-        //Прохождение формы по Имени и Фамилии
-        checkoutPage.passCheckoutFormOnlyWithFirstNameAndLastNameCheck();
-        //Проверка исчезновения ошибки после нажатия кнопки(ТУТ И ЕСТЬ ПРОБЛЕМА)
-        checkoutPage.errorBtn();
-        //Проверка кнопки Сancel
-        checkoutPage.cancelBtnCheck();
-        //Прохождение успешное прохождение формы и переход на checkout step two
-        checkoutPage.openPage();
-        checkoutPage.succsesfullyFormPass();
-        //Проверка отображения товара на странице(По сути таже проверка которую мы делали на классном занятии в на
-        //карзины,изменён был только class в xpath quantity + и "price" бы переведён в стринг формат так как в текст был
-        //впихнут символ "$"
-        checkoutPageStepTwo.openPage();
-        checkoutPageStepTwo.validateNumberOfProducts(1);
-        checkoutPageStepTwo.validateProductDetails("Sauce Labs Backpack",1,"$29.99");
-        //Проверка кнопки СANCEL
-        checkoutPageStepTwo.cancelBtnCheck();
-        //Поверка кнопи FINISH
-        checkoutPageStepTwo.openPage();
-        checkoutPageStepTwo.FinishBtnCheck();
+        loginPage
+                .openPage()
+                .login(USERNAME, EMPTY)
+                .openPage()
+                .login(EMPTY, PASSWORD)
+                .openPage()
+                .login(USERNAME, PASSWORD)
+                .chainLink()
+                .addToCart(PRODUCTNAME)
+                .removeFromCart(PRODUCTNAME)
+                .addToCart(PRODUCTNAME)
+                .chainLink()
+                .openPage()
+                .validateNumberOfProducts(1)
+                .validateProductDetails(PRODUCTNAME, 1, 29.99)
+                .openPage()
+                .clickContinue()
+                .verifyCheckoutErrorMessage("Error: First Name is required")
+                .cleanCheckoutForm()
+                .fillCheckoutForm(FIRSTNAME, EMPTY, EMPTY)
+                .clickContinue()
+                .verifyCheckoutErrorMessage("Error: Last Name is required")
+                .cleanCheckoutForm()
+                .fillCheckoutForm(FIRSTNAME, LASTNAME, EMPTY)
+                .clickContinue()
+                .verifyCheckoutErrorMessage("Error: Postal Code is required")
+                .clickErrorButton()
+                .verifyErrorMessageIsNotDisplayed()
+                .cleanCheckoutForm()
+                .fillCheckoutForm(FIRSTNAME, LASTNAME, ZIPCODE)
+                .clickContinue()
+                .openPage()
+                .fillCheckoutForm("dope", EMPTY, EMPTY)
+                .clickContinue()
+                .clickErrorButton()
+                .chainLink()
+                .openPage()
+                .clickCancelBtn("https://www.saucedemo.com/inventory.html")
+                .openPage()
+                .validateNumberOfProducts(1)
+                .validateProductDetails(PRODUCTNAME, 1, "$29.99")
+                .clickFinishBtn("https://www.saucedemo.com/checkout-complete.html");
     }
 }
