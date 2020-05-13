@@ -6,23 +6,33 @@ import static testdata.TestData.*;
 
 public class SauceDemoTest extends BaseTest {
 
-    @Test
-    public void flowTest() {
+    @Test(description = "Проверка валидации полей на странице логина")
+    public void loginFormTest() {
         loginPage
                 .openPage()
-                .login(System.getProperty("user"), System.getProperty("password"))
+                .login(USERNAME, EMPTY)
                 .openPage()
                 .login(EMPTY, PASSWORD)
                 .openPage()
-                .login(USERNAME, PASSWORD)
-                .chainLink()
+                .login(USERNAME, PASSWORD);
+    }
+
+    @Test(description = "Проверка добавления продукта в корзину и валидация отображения информация о продукте в ней")
+    public void productPageTest() {
+        productsPage
+                .openPage()
                 .addToCart(PRODUCTNAME)
                 .removeFromCart(PRODUCTNAME)
                 .addToCart(PRODUCTNAME)
                 .chainLink()
                 .openPage()
                 .validateNumberOfProducts(1)
-                .validateProductDetails(PRODUCTNAME, 1, 29.99)
+                .validateProductDetails(PRODUCTNAME, 1, 29.99);
+    }
+
+    @Test(description = "Проверка валидации полей на форме подверждения+проверка отображения сообщений об ошибки(первый шаг)")
+    public void checkoutPageTest() {
+        checkoutPage
                 .openPage()
                 .clickContinue()
                 .verifyCheckoutErrorMessage("Error: First Name is required")
@@ -42,8 +52,15 @@ public class SauceDemoTest extends BaseTest {
                 .openPage()
                 .fillCheckoutForm("dope", EMPTY, EMPTY)
                 .clickContinue()
-                .clickErrorButton()
-                .chainLink()
+                .clickErrorButton();
+    }
+
+    @Test(description = "Проверка отображения информации о товаре на странице подверждения(второй шаг)+ проверки перенапрвлений со страницы")
+    public void checkoutPageStepTwoTest() {
+        productsPage
+                .openPage()
+                .addToCart(System.getProperty("productName"));
+        checkoutPageStepTwo
                 .openPage()
                 .clickCancelBtn("https://www.saucedemo.com/inventory.html")
                 .openPage()
@@ -52,4 +69,5 @@ public class SauceDemoTest extends BaseTest {
                 .clickFinishBtn("https://www.saucedemo.com/checkout-complete.html");
     }
 }
+
 
