@@ -30,11 +30,13 @@ public class CartPage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BUTTON));
         return this;
     }
+
    @Step("Валицая колличество товаров")
     public CartPage validateNumberOfProducts(int number){
         Assert.assertEquals(driver.findElements(CART_ITEM).size(),number,"Колл элементов");
         return this;
     }
+
     @Step("Валидация товра")
     public CheckoutPage validateProductDetails(String productName, int quantity, double price) {
         String actualQuantity = driver.findElement(

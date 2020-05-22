@@ -2,7 +2,6 @@ package test;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
-import io.qameta.allure.Links;
 import org.testng.annotations.Test;
 
 import static testdata.TestData.*;
