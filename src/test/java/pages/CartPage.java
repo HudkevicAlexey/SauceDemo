@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,12 +30,12 @@ public class CartPage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BUTTON));
         return this;
     }
-
+   @Step("Валицая колличество товаров")
     public CartPage validateNumberOfProducts(int number){
         Assert.assertEquals(driver.findElements(CART_ITEM).size(),number,"Колл элементов");
         return this;
     }
-
+    @Step("Валидация товра")
     public CheckoutPage validateProductDetails(String productName, int quantity, double price) {
         String actualQuantity = driver.findElement(
                 By.xpath(String.format(productQuantityLocator, productName))).getText();

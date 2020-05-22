@@ -1,12 +1,17 @@
 package test;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Link;
+import io.qameta.allure.Links;
 import org.testng.annotations.Test;
 
 import static testdata.TestData.*;
 
 public class SauceDemoTest extends BaseTest {
 
-    @Test(description = "Проверка валидации полей на странице логина")
+    @Test(description = "Проверка логина")
+    @Description("Проверка валидации полей на странице логина")
+    @Link(name="ClickME!", url="https://youtube.com/watch?v=dQw4w9WgXcQ")
     public void loginFormTest() {
         loginPage
                 .openPage()
@@ -17,7 +22,9 @@ public class SauceDemoTest extends BaseTest {
                 .login(USERNAME, PASSWORD);
     }
 
-    @Test(description = "Проверка добавления продукта в корзину и валидация отображения информация о продукте в ней")
+    @Test(description = "Проверка добавления продукта в корзину")
+    @Description("Проверка добавления продукта в корзину и валидация отображения информация о продукте в ней")
+    @Link(name="ClickME!", url="https://youtube.com/watch?v=dQw4w9WgXcQ")
     public void productPageTest() {
         productsPage
                 .openPage()
@@ -30,8 +37,10 @@ public class SauceDemoTest extends BaseTest {
                 .validateProductDetails(PRODUCTNAME, 1, 29.99);
     }
 
-    @Test(description = "Проверка валидации полей на форме подверждения+проверка отображения сообщений об ошибки(первый шаг)")
-    public void checkoutPageTest() {
+    @Test(description = "Проверка отображения сообщений об ошибки")
+    @Description("Проверка отображения сообщений об ошибки при пропуске полей в форме")
+    @Link(name="ClickME!", url="https://youtube.com/watch?v=dQw4w9WgXcQ")
+    public void checkoutPageErrorDisplayingCheckTest() {
         checkoutPage
                 .openPage()
                 .clickContinue()
@@ -45,21 +54,26 @@ public class SauceDemoTest extends BaseTest {
                 .clickContinue()
                 .verifyCheckoutErrorMessage("Error: Postal Code is required")
                 .clickErrorButton()
-                .verifyErrorMessageIsNotDisplayed()
-                .cleanCheckoutForm()
-                .fillCheckoutForm(FIRSTNAME, LASTNAME, ZIPCODE)
-                .clickContinue()
-                .openPage()
-                .fillCheckoutForm("dope", EMPTY, EMPTY)
-                .clickContinue()
-                .clickErrorButton();
+                .verifyErrorMessageIsNotDisplayed();
     }
 
-    @Test(description = "Проверка отображения информации о товаре на странице подверждения(второй шаг)+ проверки перенапрвлений со страницы")
+    @Test(description = "Прохождени страницы подверджения(первый шаг)")
+    @Description("Провекрка прохождения формы подверждения покупки с валдиными данными")
+    @Link(name="ClickME!", url="https://youtube.com/watch?v=dQw4w9WgXcQ")
+    public void checkoutPageFormPassingCheck() {
+        checkoutPage
+                .openPage()
+                .fillCheckoutForm(FIRSTNAME, LASTNAME, ZIPCODE)
+                .clickContinue();
+    }
+
+    @Test(description = "Проверка страницы подверждения(второй шаг)")
+    @Description("Проверка отображения информации о товаре на странице подверждения(второй шаг)+ проверки перенапрвлений со страницы")
+    @Link(name="ClickME!", url="https://youtube.com/watch?v=dQw4w9WgXcQ")
     public void checkoutPageStepTwoTest() {
         productsPage
                 .openPage()
-                .addToCart(System.getProperty("productName"));
+                .addToCart(PRODUCTNAME);
         checkoutPageStepTwo
                 .openPage()
                 .clickCancelBtn("https://www.saucedemo.com/inventory.html")

@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,7 +21,9 @@ public class CheckoutPageStepTwo extends BasePage {
     public CheckoutPageStepTwo(WebDriver driver) {
         super(driver);
     }
+
     @Override
+    @Step("Открытие страницы")
     public CheckoutPageStepTwo openPage() {
         driver.get(LOGIN_URL);
         return this;
@@ -32,11 +35,13 @@ public class CheckoutPageStepTwo extends BasePage {
         return this;
     }
 
+    @Step("Валицая колличество товаров")
     public CheckoutPageStepTwo validateNumberOfProducts(int number) {
         Assert.assertEquals(driver.findElements(OVERVIEW_CART).size(), number, "Колл элементов не соответсвует");
         return this;
     }
 
+    @Step("Валидация товра")
     public CheckoutPageStepTwo validateProductDetails(String productName, int quantity, String price) {
         String actualQuantity = driver.findElement(
                 By.xpath(String.format(productQuantityLocator, productName))).getText();
@@ -49,17 +54,19 @@ public class CheckoutPageStepTwo extends BasePage {
         return this;
     }
 
+    @Step("Нажатие кнопки Cancel")
     public CheckoutPageStepTwo clickCancelBtn(String CurrentUrl) {
         driver.findElement(CANCEL_BTN).click();
         String inventoryUrl = driver.getCurrentUrl();
-        Assert.assertEquals(inventoryUrl,CurrentUrl,"Page is not matching");
+        Assert.assertEquals(inventoryUrl, CurrentUrl, "Page is not matching");
         return this;
     }
 
+    @Step("Нажатие кнопки Finish")
     public CheckoutPageStepTwo clickFinishBtn(String CurrentUrl) {
         driver.findElement(FINISH_BTN).click();
         String inventoryUrl = driver.getCurrentUrl();
-        Assert.assertEquals(inventoryUrl,CurrentUrl,"Page is not matching");
+        Assert.assertEquals(inventoryUrl, CurrentUrl, "Page is not matching");
         return this;
     }
 }
