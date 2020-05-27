@@ -10,6 +10,7 @@ public class SauceDemoTest extends BaseTest {
 
     @Test(description = "Проверка логина")
     @Description("Проверка валидации полей на странице логина")
+    @D
     @Link(name="ClickME!", url="https://youtube.com/watch?v=dQw4w9WgXcQ")
     public void loginFormTest() {
         loginPage
