@@ -15,15 +15,12 @@ public class CapabilitiesGenerator {
         String os = System.getProperty("os.name").toLowerCase();
         System.out.println(("Operational system: " + os + "; Driver path: " + driverPath));
         if (os.contains("win")) {
-            System.setProperty("webdriver.chrome.driver", driverPath + "/webdrivers/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", driverPath + "/chromedriver.exe");
         } else if (os.contains("mac")) {
             System.setProperty("webdriver.chrome.driver", driverPath + "/chromedriver");
         } else {
             System.setProperty("webdriver.chrome.driver", driverPath + "/linux/chromedriver");
         }
-        options.addArguments("--ignore-certificate-errors");
-        options.addArguments("--disable-popup-blocking");
-        options.addArguments("--disable-notifications");
 
         //options.addArguments("--headless"); // only if you are ACTUALLY running headless
         //options.addArguments("--no-sandbox"); //https://stackoverflow.com/a/50725918/1689770
