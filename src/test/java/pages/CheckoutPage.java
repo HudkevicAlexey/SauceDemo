@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,6 +21,7 @@ public class CheckoutPage extends BasePage {
         super(driver);
     }
 
+    @Step("Открыти страницы")
     public CheckoutPage openPage() {
         driver.get(LOGIN_URL);
         return this;
@@ -31,16 +33,19 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
+    @Step("Нажатие кнопки CONTINUE ")
     public CheckoutPage clickContinue() {
         driver.findElement(CONTINUE).click();
         return this;
     }
 
+    @Step("Верефикация текста ошибки")
     public CheckoutPage verifyCheckoutErrorMessage(String errorMessage) {
         Assert.assertEquals(driver.findElement(ERRORMESSAGE).getText(), errorMessage, "Text message is not right");
         return this;
     }
 
+    @Step("Заполнение формы")
     public CheckoutPage fillCheckoutForm(String firstName, String lastName, String zipCode) {
         if (!firstName.equals("")) {
             driver.findElement(FIRSTNAME).sendKeys(firstName);
@@ -54,6 +59,7 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
+    @Step("Отчиства формы")
     public CheckoutPage cleanCheckoutForm() {
         driver.findElement(FIRSTNAME).clear();
         driver.findElement(LASTNAME).clear();
@@ -61,16 +67,19 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
+    @Step("Закрытие ошибки")
     public CheckoutPage clickErrorButton() {
         driver.findElement(ERRORBTN).click();
         return this;
     }
 
+    @Step("Верифкация отсутсвия ошибки")
     public CheckoutPage verifyErrorMessageIsNotDisplayed() {
         Assert.assertTrue(isElementPresent(ERRORMESSAGE), "Error message is not disappeared");
         return this;
     }
-    public CheckoutPageStepTwo chainLink(){
+
+    public CheckoutPageStepTwo chainLink() {
         return new CheckoutPageStepTwo(driver);
     }
 }
