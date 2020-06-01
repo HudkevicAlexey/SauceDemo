@@ -6,7 +6,7 @@ pipeline {
       maven "M3"
    }
    triggers {
-        cron('*/5 * * * *')
+        cron('0 8 * * * ')
     }
    parameters {
        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
@@ -18,9 +18,6 @@ pipeline {
          steps {
             // Get some code from a GitHub repository
             git branch: "${params.BRANCH}", url: 'https://github.com/HudkevicAlexey/SauceDemo'
-
-            // Run Maven on a Unix agent.
-            // sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
             // To run Maven on a Windows agent, use
             bat "mvn clean test"
